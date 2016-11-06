@@ -1,0 +1,8 @@
+version: '2'
+services:
+  web:
+    build: target/docker/stage
+    ports:
+      - "9000:9000"
+    environment:
+      - PLAY_CRYPTO_SECRET="Not a real secret"

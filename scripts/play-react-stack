@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+
+import argparse
+import subprocess
+
+def main():
+    parser = argparse.ArgumentParser(description='Control react-play docker stack.')
+    parser.add_argument('command',  nargs='?', default="up")
+    parser.add_argument('-d', '--detach', action='store_true', default=False)
+
+    args = parser.parse_args()
+    if args.command == "up":
+        subprocess.check_call(["sbt", "docker:stage"])
+        subprocess.check_call(["docker-compose", "build"])
+        buildCmd = ["docker-compose", "up"]
+        if args.detach:
+            buildCmd.append('-d')
+        subprocess.check_call(buildCmd)
+    elif args.command == "down":
+        subprocess.check_call(["docker-compose", "stop"])
+    else:
+        print "Unknown command {}".format(args.command)
+        print parser.usage
+
+
+if __name__ == "__main__":
+    main()
