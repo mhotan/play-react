@@ -1,0 +1,2 @@
+# Play Scala + React skeleton
+
